@@ -14,7 +14,7 @@ charset-normalizer==3.4.4
     # via requests
 coloredlogs==15.0.1
     # via onnxruntime
-ddddocr==1.0.6
+ddddocr==1.5.6
     # via swjtu-score-monitor (pyproject.toml)
 exceptiongroup==1.3.1
     # via anyio
@@ -36,14 +36,15 @@ numpy==2.2.6
     # via
     #   ddddocr
     #   onnxruntime
+    #   opencv-python-headless
 onnxruntime==1.23.2
+    # via ddddocr
+opencv-python-headless==4.12.0.88
     # via ddddocr
 packaging==25.0
     # via onnxruntime
 pillow==10.0.0
-    # via
-    #   swjtu-score-monitor (pyproject.toml)
-    #   ddddocr
+    # via ddddocr
 protobuf==6.33.2
     # via onnxruntime
 psycopg2-binary==2.9.11

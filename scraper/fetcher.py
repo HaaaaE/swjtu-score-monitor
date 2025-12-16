@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import time
 import ddddocr
+import logging
 
 # --- 配置与常量 ---
 BASE_URL = "https://jwc.swjtu.edu.cn"

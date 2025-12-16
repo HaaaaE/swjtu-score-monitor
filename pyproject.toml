@@ -7,9 +7,8 @@ requires-python = ">=3.10"
 dependencies = [
     "azure-functions>=1.24.0",
     "bs4==0.0.2",
-    "ddddocr==1.0.6",
+    "ddddocr==1.5.6",
     "fastapi==0.99.1",
-    "pillow==10.0.0",
     "psycopg2-binary==2.9.11",
     "requests==2.32.5",
 ]

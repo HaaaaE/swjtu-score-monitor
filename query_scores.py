@@ -30,7 +30,7 @@ class ScoreFetcher:
         self.session = requests.Session()
         self.session.headers.update(HEADERS)
         self.is_logged_in = False
-        self.ocr = ddddocr.DdddOcr()
+        self.ocr = ddddocr.DdddOcr(show_ad=False)
 
 # --- 在 ScoreFetcher 类中 ---
 # 用这个新函数完整替换旧的 login 函数
@@ -54,6 +54,7 @@ class ScoreFetcher:
                 image_bytes = response.content
                 
                 # 使用ddddocr识别
+                self.ocr.set_ranges(2)
                 captcha_code = self.ocr.classification(image_bytes)
                 print(f"ddddocr 识别结果: {captcha_code}")
                 
