@@ -23,4 +23,4 @@ jobs:
           FULL_URL="${API_URL}api/check-login-usability?secret=${API_SECRET}"
           
           echo "Sending request to: $FULL_URL"
-          curl -X GET "$FULL_URL"
+          curl -X GET --fail-with-body "$FULL_URL"
