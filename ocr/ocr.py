@@ -37,7 +37,7 @@ def preprocess_image(image_path, threshold=128, noise_reduction_strength=2):
                 img_data[x, y] = 1
                 
     # 【调试】保存二值化结果
-    img_bin.convert('RGB').save(os.path.join(DEBUG_FOLDER, "debug_1_binarized.png"))
+    #img_bin.convert('RGB').save(os.path.join(DEBUG_FOLDER, "debug_1_binarized.png"))
     print("✅ 步骤1: 二值化完成。请检查 'ocr/debug_output/debug_1_binarized.png'")
     
     return img_bin
@@ -62,7 +62,7 @@ def segment_characters(img):
     draw = ImageDraw.Draw(proj_img)
     for x, val in enumerate(vertical_projection):
         draw.line([(x, height), (x, height - val)], fill=(0, 0, 0))
-    proj_img.save(os.path.join(DEBUG_FOLDER, "debug_3_vertical_projection.png"))
+    #proj_img.save(os.path.join(DEBUG_FOLDER, "debug_3_vertical_projection.png"))
     print("✅ 步骤3: 垂直投影计算完成。请检查 'debug_output/debug_3_vertical_projection.png'")
 
     # 步骤 2.2: 寻找边界并切割
@@ -122,7 +122,7 @@ def segment_characters(img):
         
         char_images.append(char_img)
         # 【调试】保存每个切割出的字符（保持二值模式）
-        char_img.save(os.path.join(DEBUG_FOLDER, f"char_{i}.png"))
+        #char_img.save(os.path.join(DEBUG_FOLDER, f"char_{i}.png"))
         print(f"  - 保存 'debug_output/char_{i}.png'")
         
     return char_images
@@ -302,7 +302,7 @@ def classify(image_bytes):
                 img_data[x, y] = 1
                 
     # 【调试】保存二值化结果
-    img_bin.convert('RGB').save(os.path.join(DEBUG_FOLDER, "debug_1_binarized.png"))
+    #img_bin.convert('RGB').save(os.path.join(DEBUG_FOLDER, "debug_1_binarized.png"))
     print("✅ 步骤1: 二值化完成。请检查 'debug_output/debug_1_binarized.png'")    
     # 2. 分割字符
     char_images = segment_characters(img_bin)
