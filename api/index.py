@@ -270,7 +270,7 @@ def generate_change_notification_html(changes):
             th { background-color: #3498db; color: white; padding: 12px; text-align: left; }
             td { border: 1px solid #ddd; padding: 10px; }
             tr:nth-child(even) { background-color: #f2f2f2; }
-            .new-value { color: #27ae60; font-weight: bold; }
+            .new-value { color: #3498db; font-weight: bold; }
             .old-value { color: #95a5a6; text-decoration: line-through; }
             .highlight { background-color: #fff3cd; }
         </style>
