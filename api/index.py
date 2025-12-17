@@ -8,7 +8,7 @@ import sys, os
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from scraper.fetcher import ScoreFetcher
-from scraper import database  # <-- 导入新的数据库模块
+from scraper import database
 
 app = FastAPI()
 
