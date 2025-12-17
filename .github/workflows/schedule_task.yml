@@ -19,5 +19,8 @@ jobs:
           # 从仓库密钥中读取 API_URL
           API_URL: ${{ secrets.API_URL }}
         run: |
-          # 发送请求，-v 会显示详细日志，便于调试
-          curl -X GET "${API_URL}api/monitor-scores/?secret=${API_SECRET}"
+          # 构建完整的 URL（确保格式正确）
+          FULL_URL="${API_BASE_URL}/api/monitor-scores?secret=${API_SECRET}"
+          
+          echo "Sending request to: $FULL_URL"
+          curl -X GET "$FULL_URL"
