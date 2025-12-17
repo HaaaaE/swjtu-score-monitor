@@ -73,12 +73,25 @@ async def trigger_fetch_scores(api_key: str = Security(get_api_key)):
 def read_root():
     return {"status": "online", "message": "SWJTU Score Fetcher API is running with upstash."}
 
-@app.get("/api/send-email") 
-@app.post("/api/send-email")
-async def trigger_send_email(api_key: str = Security(get_api_key)):
+@app.get("/api/check-login-usability") 
+@app.post("/api/check-login-usability")
+async def trigger_check_login_usability(api_key: str = Security(get_api_key)):
+    """检查当前配置的学号和密码是否能成功登录教务系统"""
+    username = os.environ.get("SWJTU_USERNAME")
+    password = os.environ.get("SWJTU_PASSWORD")
+    if not username or not password:
+        raise HTTPException(status_code=500, detail="服务器未配置学号或密码环境变量")
+    try:
+        fetcher = ScoreFetcher(username=username, password=password)
+        login_success = fetcher.login()
+    except Exception as e:
+        print(f"检查登录有效性时发生错误: {e}")
+        raise HTTPException(status_code=500, detail=f"检查登录有效性时发生内部错误: {str(e)}")
+    if login_success:
+        return {"status": "success", "message": "登录成功，学号和密码有效。"}
+    else:
+        return {"status": "error", "message": "登录失败，请检查学号和密码是否正确。"}
     
-    pass
-
 @app.get("/api/monitor-scores")
 @app.post("/api/monitor-scores")
 async def trigger_monitor_scores(api_key: str = Security(get_api_key)):
