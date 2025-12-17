@@ -10,12 +10,12 @@ yum install -y \
   lcms2-devel libwebp-devel tcl-devel tk-devel harfbuzz-devel \
   fribidi-devel libraqm-devel libimagequant-devel libxcb-devel
 
-# 第2步：将所有 Python 依赖包作为文件直接安装到 'api/' 目录下
-echo "--- System dependencies installed. Installing Python packages directly into the 'api' directory ---"
+# # 第2步：将所有 Python 依赖包作为文件直接安装到 'api/' 目录下
+# echo "--- System dependencies installed. Installing Python packages directly into the 'api' directory ---"
 
-# 关键改动：使用 --target api
-# 这会把 fastapi, Pillow 等所有库的文件下载并放置在 api/ 文件夹下
-# 这样它们就会和你的函数代码一起被打包和部署
-pip install . --target api
+# # 关键改动：使用 --target api
+# # 这会把 fastapi, Pillow 等所有库的文件下载并放置在 api/ 文件夹下
+# # 这样它们就会和你的函数代码一起被打包和部署
+# pip install . --target api
 
 echo "--- Build script finished. ---"

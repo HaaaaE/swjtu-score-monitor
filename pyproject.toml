@@ -7,12 +7,12 @@ requires-python = ">=3.10"
 dependencies = [
     #"azure-functions>=1.24.0",
     "bs4==0.0.2",
-    "pillow==10.1.0",
     "fastapi==0.99.1",
+    "pillow==10.1.0",
     "requests==2.32.5",
-    "upstash-redis>=1.5.0",
+    "upstash-redis==1.5.0",
 ]
-# --- 新增或修改以下部分 ---
-[tool.setuptools]
-# 明确告诉 setuptools 包含哪些包
-packages = ["api", "ocr", "scraper"]
+# # --- 新增或修改以下部分 ---
+# [tool.setuptools]
+# # 明确告诉 setuptools 包含哪些包
+# packages = ["api", "ocr", "scraper"]
