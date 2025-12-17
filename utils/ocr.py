@@ -38,7 +38,7 @@ def preprocess_image(image_path, threshold=128, noise_reduction_strength=2):
                 
     # 【调试】保存二值化结果
     #img_bin.convert('RGB').save(os.path.join(DEBUG_FOLDER, "debug_1_binarized.png"))
-    print("✅ 步骤1: 二值化完成。请检查 'ocr/debug_output/debug_1_binarized.png'")
+    print("✅ 步骤1: 二值化完成。请检查 'utils/debug_output/debug_1_binarized.png'")
     
     return img_bin
 
@@ -128,7 +128,7 @@ def segment_characters(img):
     return char_images
 
 # --- 3. 字符识别 (增加详细log) ---
-def load_templates(template_dir=os.path.join(PROJECT_ROOT, 'ocr', 'templates')):
+def load_templates(template_dir=os.path.join(PROJECT_ROOT, 'utils', 'templates')):
     """加载模板字符库"""
     # 初始化空字典，用于存储模板图像
     templates = {}
