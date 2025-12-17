@@ -7,7 +7,7 @@ import logging
 from pathlib import Path
 import sys, os
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from ocr import ocr  # 导入自定义OCR模块
+import ocr  # 导入自定义OCR模块
 
 # --- 配置与常量 ---
 BASE_URL = "https://jwc.swjtu.edu.cn"
