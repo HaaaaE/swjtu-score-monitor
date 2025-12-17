@@ -15,8 +15,9 @@ jobs:
       - name: Send GET request with Secret
         env:
           # 从仓库密钥中读取 API_TOKEN，赋值给环境变量 MY_SECRET
-          MY_SECRET: ${{ secrets.API_SECRET }}
+          API_SECRET: ${{ secrets.API_SECRET }}
+          # 从仓库密钥中读取 API_URL
+          API_URL: ${{ secrets.API_URL }}
         run: |
           # 发送请求，-v 会显示详细日志，便于调试
-          # 请将下面的 URL 替换为你真实的地址
-          curl -X GET "https://swjtu-score-monitor.vercel.app/api/monitor-scores?secret=$MY_SECRET"
+          curl -X GET "${API_URL}api/monitor-scores/?secret=${API_SECRET}"
