@@ -1,0 +1,39 @@
+name: Check Connectivity
+
+on:
+  schedule:
+    # 对应北京时间 07:00 - 23:59，每30分钟执行一次
+    # GitHub 使用 UTC 时间，所以配置为 UTC 23:00 - 15:59
+    - cron: '*/20 * * * *'
+  # 允许手动点击按钮触发，方便测试
+  workflow_dispatch:
+
+jobs:
+  run-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 检出代码
+      - uses: actions/checkout@v4
+
+      # 2. 安装 uv 并配置缓存
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+
+      # 3. 同步依赖 (自动安装 .python-version 指定的 Python 版本)
+      - name: Install dependencies
+        run: uv sync
+
+      # 4. 运行代码 (注入环境变量)
+      - name: Run script
+        env:
+          SWJTU_USERNAME: ${{ secrets.SWJTU_USERNAME }}
+          SWJTU_PASSWORD: ${{ secrets.SWJTU_PASSWORD }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+        run: uv run python actions/index.py check
