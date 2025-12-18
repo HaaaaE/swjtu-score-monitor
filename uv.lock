@@ -216,7 +216,7 @@ wheels = [
 ]
 
 [[package]]
-name = "swjtu-score-monitor"
+name = "swjtu-scores-monitor"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
