@@ -1,13 +1,20 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FHaaaaE%2Fswjtu-score-monitor&env=SWJTU_USERNAME,EMAIL_PASSWORD,SMTP_HOST,NOTIFY_EMAIL,EMAIL_PASSWORD,UPSTASH_REDIS_REST_URL,UPSTASH_REDIS_REST_TOKEN,API_SECRET_TOKEN&project-name=swjtu-score-monitor&repository-name=swjtu-score-monitor)
+```
+SWJTU_USERNAME
+```
+```
+SWJTU_PASSWORD
+```
+```
+SMTP_HOST
+```
+```
+NOTIFY_EMAIL
+```
+```
+EMAIL_PASSWORD
+```
+```
+GIST_PAT
+```
 
-```
-SWJTU_USERNAME=
-SWJTU_PASSWORD=
-SMTP_HOST=
-NOTIFY_EMAIL=
-EMAIL_PASSWORD=
-UPSTASH_REDIS_REST_URL=
-UPSTASH_REDIS_REST_TOKEN=
-API_SECRET_TOKEN=
-```
 
