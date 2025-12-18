@@ -1,5 +1,4 @@
 #custom
-uv.lock
 .vscode
 utils/debug_output/*
 !utils/debug_output/.gitkeep
