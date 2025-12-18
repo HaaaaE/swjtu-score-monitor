@@ -4,14 +4,14 @@ import requests
 from datetime import datetime, timezone
 
 # --- 配置部分 ---
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+GIST_PAT = os.getenv("GIST_PAT")
 # 默认文件名为 scores.json，用户也可以通过环境变量覆盖
 GIST_FILENAME = os.getenv("GIST_NAME", "scores.json")
 # 双重保险
 TARGET_DESCRIPTION = "just_for_swjtu_scores_monotor"
 
-if not GITHUB_TOKEN:
-    raise ValueError("严重错误: 必须设置 GITHUB_TOKEN 环境变量")
+if not GIST_PAT:
+    raise ValueError("严重错误: 必须设置 GIST_PAT 环境变量")
 
 # 确保文件名以 .json 结尾
 if not GIST_FILENAME.endswith(".json"):
@@ -21,7 +21,7 @@ _CACHED_GIST_ID = None
 
 BASE_URL = "https://api.github.com/gists"
 HEADERS = {
-    "Authorization": f"token {GITHUB_TOKEN}",
+    "Authorization": f"token {GIST_PAT}",
     "Accept": "application/vnd.github.v3+json"
 }
 
