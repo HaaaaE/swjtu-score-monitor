@@ -34,6 +34,5 @@ jobs:
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
-          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
-          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+          GIST_PAT: ${{ secrets.GIST_PAT }}
         run: uv run python actions/index.py check
