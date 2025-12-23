@@ -8,9 +8,27 @@ from pathlib import Path
 import sys, os
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from utils import ocr  # 导入自定义OCR模块
+from urllib.parse import urlparse
 
 # --- 配置与常量 ---
 BASE_URL = "https://jwc.swjtu.edu.cn"
+
+# 发起请求，允许重定向
+response = requests.get(
+    BASE_URL,
+    timeout=5,
+    allow_redirects=True,  # 自动跟随重定向
+    verify=True  # 验证 SSL 证书
+)
+
+# 解析最终的 URL
+final_url = response.url
+parsed = urlparse(final_url)
+final_protocol = parsed.scheme
+if final_protocol == "http":
+    BASE_URL = "http://jwc.swjtu.edu.cn"
+    print("检测到教务使用 HTTP，已切换为 HTTP 访问。")
+
 LOGIN_PAGE_URL = f"{BASE_URL}/service/login.html"
 LOGIN_API_URL = f"{BASE_URL}/vatuu/UserLoginAction"
 CAPTCHA_URL = f"{BASE_URL}/vatuu/GetRandomNumberToJPEG"
@@ -56,7 +74,7 @@ class ScoreFetcher:
                 login_result = response.json()
 
                 if login_result.get('loginStatus') == '1':
-                    print(f"API验证成功！{login_result.get('loginMsg')[5:0]}")
+                    print(f"API验证成功！{login_result.get('loginMsg')[0:5]}")
                     print("正在访问加载页面以建立完整会话...")
                     self.session.get(LOADING_URL, headers={'Referer': LOGIN_PAGE_URL}, timeout=10)
                     print("会话建立成功，已登录。")
@@ -198,3 +216,88 @@ class ScoreFetcher:
 
         print("总成绩与平时成绩合并完成。")
         return all_scores
+   
+import requests
+from urllib.parse import urlparse
+
+def detect_base_url(domain, test_path='/', timeout=5):
+    """
+    自动检测网站实际使用的协议（HTTP/HTTPS）
+    通过尝试访问并跟随重定向来判断
+    
+    Args:
+        domain: 域名，如 'jwc.swjtu.edu.cn'
+        test_path: 测试路径，默认为根路径
+        timeout: 超时时间（秒）
+    
+    Returns:
+        str: 实际使用的 BASE_URL，如 'http://jwc.swjtu.edu.cn'
+    """
+    print(f"🔍 正在检测 {domain} 的访问协议...")
+    
+    # 优先尝试 HTTPS（现代标准）
+    for protocol in ['https', 'http']:
+        test_url = f"{protocol}://{domain}{test_path}"
+        
+        try:
+            print(f"  📡 尝试 {protocol.upper()} ...")
+            
+            # 发起请求，允许重定向
+            response = requests.get(
+                test_url,
+                timeout=timeout,
+                allow_redirects=True,  # 自动跟随重定向
+                verify=True  # 验证 SSL 证书
+            )
+            
+            # 解析最终的 URL
+            final_url = response.url
+            parsed = urlparse(final_url)
+            final_protocol = parsed.scheme
+            final_domain = parsed.netloc
+            
+            # 检查是否发生了重定向
+            if response.history:
+                print(f"  ↪️  发生了 {len(response.history)} 次重定向:")
+                for i, resp in enumerate(response.history, 1):
+                    print(f"      {i}. {resp.url} → {resp.status_code} {resp.reason}")
+            
+            print(f"  ✅ 最终访问: {final_url}")
+            print(f"  🔐 使用协议: {final_protocol.upper()}")
+            print(f"  📊 状态码: {response.status_code}")
+            
+            # 检测到协议降级
+            if protocol == 'https' and final_protocol == 'http':
+                print(f"  ⚠️  服务器将 HTTPS 重定向到 HTTP")
+                print(f"  💡 建议直接使用 HTTP 协议以避免 Cookie 问题")
+            
+            # 构造 BASE_URL
+            base_url = f"{final_protocol}://{final_domain}"
+            
+            print(f"\n✨ 检测完成！使用: {base_url}\n")
+            return base_url
+            
+        except requests.exceptions.SSLError as e:
+            print(f"  ❌ SSL 证书错误")
+            print(f"  💡 {protocol.upper()} 不可用，继续尝试...")
+            continue
+            
+        except requests.exceptions.ConnectionError as e:
+            print(f"  ❌ 连接失败")
+            print(f"  💡 {protocol.upper()} 无法访问，继续尝试...")
+            continue
+            
+        except requests.exceptions.Timeout:
+            print(f"  ❌ 连接超时（>{timeout}秒）")
+            continue
+            
+        except Exception as e:
+            print(f"  ❌ 未知错误: {type(e).__name__}: {e}")
+            continue
+    
+    # 所有协议都失败，默认使用 HTTP
+    print(f"⚠️  无法自动检测，默认使用: http://{domain}\n")
+    return f"http://{domain}"
+
+if __name__ == "__main__":
+    print(detect_base_url("jwc.swjtu.edu.cn"))
